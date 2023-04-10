@@ -1,0 +1,24 @@
+; Top Design: "KSpace_lib:butterworth:schematic"
+; Netlisted using Hierarchy Policy: "Standard"
+
+Options ResourceUsage=yes UseNutmegFormat=no EnableOptim=no TopDesignName="KSpace_lib:butterworth:schematic" DcopOutputNodeVoltages=yes DcopOutputPinCurrents=yes DcopOutputAllSweepPoints=no DcopOutputDcopType=0
+L:L2  N__5 N__4 L=3.68 nH Noise=yes  
+L:L4  N__4 N__3 L=1.52 nH Noise=yes  
+S_Param:SP1 CalcS=yes CalcY=no CalcZ=no GroupDelayAperture=1e-4 FreqConversion=no FreqConversionPort=1 StatusLevel=2 CalcNoise=no SortNoise=0 BandwidthForNoise=1.0 Hz DevOpPtLevel=0 \
+SweepVar="freq" SweepPlan="SP1_stim" OutputPlan="SP1_Output" 
+
+SweepPlan: SP1_stim Start=100 MHz Stop=100 GHz Dec=40 
+
+OutputPlan:SP1_Output \
+      Type="Output" \
+      UseEquationNestLevel=yes \
+      EquationNestLevel=2 \
+      UseSavedEquationNestLevel=yes \
+      SavedEquationNestLevel=2
+
+#load "python","LinearCollapse"
+Component Module="LinearCollapse" Type="ModelExtractor" NetworkRepresentation=2
+Port:TermG1  N__5 0 Num=1 Z=50 Ohm Noise=yes 
+Port:TermG2  N__3 0 Num=2 Z=50 Ohm Noise=yes 
+C:C1  0 N__5 C=0.609 pF 
+C:C3  0 N__4 C=1.47 pF 
